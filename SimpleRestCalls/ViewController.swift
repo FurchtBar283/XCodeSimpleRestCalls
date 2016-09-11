@@ -20,8 +20,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var getRequestButton: UIButton!
     @IBOutlet weak var postRequestButton: UIButton!
     
-    var getJsonResultKeyOrigin :String = ""
-    var optionsResponseAllowedHTTPMethods = ""
+    var httpResult :String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,20 +36,21 @@ class ViewController: UIViewController {
     // Action-functions for all UIButtons
     @IBAction func getRequestSent(sender: UIButton) {
         sendHTTPGet()
-        if !getJsonResultKeyOrigin.isEmpty {
-            self.getRequestAnswerLabel.text = getJsonResultKeyOrigin
+        if !httpResult.isEmpty {
+            self.getRequestAnswerLabel.text = httpResult
+            httpResult = ""
         }
     }
     
     @IBAction func postRequestSent(sender: UIButton) {
         sendHTTPPost()
         self.postRequestAnswerLabel.text = "POST sent"
-        
     }
     
     @IBAction func optionsRequestSent(sender: UIButton) {
         sendHTTPOptions()
-        self.optionsRequestAnswerLabel.text =  "Allowed HTTP methods are " + optionsResponseAllowedHTTPMethods
+        self.optionsRequestAnswerLabel.text =  "Allowed HTTP methods are " + httpResult
+        httpResult = ""
     }
     
     @IBAction func putRequestSent(sender: UIButton) {
@@ -60,7 +60,8 @@ class ViewController: UIViewController {
     
     @IBAction func deleteRequestSent(sender: UIButton) {
         sendHTTPDelete()
-        self.deleteRequestAnswerLabel.text = "DELETE sent"
+        self.deleteRequestAnswerLabel.text = httpResult
+        httpResult = ""
     }
     
     @IBAction func headRequestSent(sender: AnyObject) {
@@ -103,7 +104,7 @@ class ViewController: UIViewController {
                 print(jsonResult.valueForKey("origin"))
                 
                 // TODO: Wait for HTTP-Answer
-                self.getJsonResultKeyOrigin = jsonResult.valueForKey("origin") as! String
+                self.httpResult = jsonResult.valueForKey("origin") as! String
                 
                 
             } catch let jsonError {
@@ -193,7 +194,7 @@ class ViewController: UIViewController {
             print("OPTIONS: Allowed HTTP methods are")
             print(urlResponseAsDictionary.valueForKey("allow"))
             
-            self.optionsResponseAllowedHTTPMethods = urlResponseAsDictionary.valueForKey("allow") as! String
+            self.httpResult = urlResponseAsDictionary.valueForKey("allow") as! String
             
             
             }.resume()
@@ -275,6 +276,11 @@ class ViewController: UIViewController {
             
             print("DELETE: HTTP Statuscode is ")
             print(urlResponse.statusCode)
+            
+            if urlResponse.statusCode == 200 {
+                print("DELETE: Ressource successfully deleted")
+                self.httpResult = "Ressource successfully deleted"
+            }
             
             }.resume()
         
