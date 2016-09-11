@@ -63,6 +63,7 @@ class ViewController: UIViewController {
     
     
     //  HTTP-GET
+    // TODO: File-download, Background-download
     func sendHTTPGet() {
         // Creating a configuration object is always the first step when uploading or downloading data
         // configure timeout values, caching policies, connection requirements and other types of info for NSURLSession
@@ -111,6 +112,7 @@ class ViewController: UIViewController {
     }
     
     // HTTP-POST
+    // TODO: Post JSON, Upload a file
     func sendHTTPPost() {
         let myUrlSessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
         let myUrlSession = NSURLSession.init(configuration: myUrlSessionConfig)
