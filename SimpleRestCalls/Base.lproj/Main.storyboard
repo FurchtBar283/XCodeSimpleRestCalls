@@ -21,10 +21,50 @@
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" title="GET-Request"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="155" y="385" width="91" height="30"/>
+                                    <rect key="frame" x="148" y="126" width="91" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="getRequestSent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AQj-IL-e6a"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sqW-yI-M78">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="POST-Request"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="142" y="215" width="102" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="postRequestSent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="f7F-2b-0H5"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x9H-DH-JFh">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="OPTIONS-Request"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="136" y="304" width="129" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="optionsRequestSent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BCE-7e-Ay5"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VOG-Gp-6Tv">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="DELETE-Request"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="141" y="482" width="118" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="deleteRequestSent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rMV-hz-FrD"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nhx-hl-ylb">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="PUT-Request"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="154" y="393" width="92" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="putRequestSent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="spr-Sh-JSV"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eJe-px-1r3">
@@ -33,18 +73,62 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="69" y="126" width="263" height="43"/>
+                                    <rect key="frame" x="70" y="75" width="263" height="43"/>
                                 </variation>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sqW-yI-M78">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" title="POST-Request"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j6g-76-Ve0">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="150" y="423" width="102" height="30"/>
+                                    <rect key="frame" x="70" y="164" width="263" height="43"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CYc-1d-t1m">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="70" y="253" width="263" height="43"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zir-g8-jpm">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="70" y="342" width="263" height="43"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BbC-28-TDI">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="70" y="431" width="263" height="43"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mjt-Vj-SWA">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="69" y="520" width="263" height="43"/>
+                                </variation>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H2k-La-tLJ">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="HEAD-Request"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="148" y="571" width="104" height="30"/>
                                 </variation>
                                 <connections>
-                                    <action selector="getRequestSent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="a6k-8d-FHe"/>
-                                    <action selector="postRequestSent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="f7F-2b-0H5"/>
+                                    <action selector="headRequestSent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VBf-NQ-gdU"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -52,22 +136,45 @@
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="Bfw-tE-Sf6"/>
-                                <exclude reference="eJe-px-1r3"/>
                                 <exclude reference="sqW-yI-M78"/>
+                                <exclude reference="x9H-DH-JFh"/>
+                                <exclude reference="VOG-Gp-6Tv"/>
+                                <exclude reference="nhx-hl-ylb"/>
+                                <exclude reference="eJe-px-1r3"/>
+                                <exclude reference="j6g-76-Ve0"/>
+                                <exclude reference="CYc-1d-t1m"/>
+                                <exclude reference="Zir-g8-jpm"/>
+                                <exclude reference="BbC-28-TDI"/>
+                                <exclude reference="Mjt-Vj-SWA"/>
+                                <exclude reference="H2k-La-tLJ"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="Bfw-tE-Sf6"/>
-                                <include reference="eJe-px-1r3"/>
                                 <include reference="sqW-yI-M78"/>
+                                <include reference="x9H-DH-JFh"/>
+                                <include reference="VOG-Gp-6Tv"/>
+                                <include reference="nhx-hl-ylb"/>
+                                <include reference="eJe-px-1r3"/>
+                                <include reference="j6g-76-Ve0"/>
+                                <include reference="CYc-1d-t1m"/>
+                                <include reference="Zir-g8-jpm"/>
+                                <include reference="BbC-28-TDI"/>
+                                <include reference="Mjt-Vj-SWA"/>
+                                <include reference="H2k-La-tLJ"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="deleteRequestAnswerLabel" destination="BbC-28-TDI" id="bqn-qg-TEQ"/>
                         <outlet property="getRequestAnswerLabel" destination="eJe-px-1r3" id="l7s-IR-xz1"/>
                         <outlet property="getRequestButton" destination="Bfw-tE-Sf6" id="nX1-q2-zrk"/>
+                        <outlet property="headRequestAnswerLabel" destination="Mjt-Vj-SWA" id="jTV-FJ-ac0"/>
+                        <outlet property="optionsRequestAnswerLabel" destination="CYc-1d-t1m" id="ipm-Es-Bdo"/>
+                        <outlet property="postRequestAnswerLabel" destination="j6g-76-Ve0" id="mWJ-S9-Tkr"/>
                         <outlet property="postRequestButton" destination="sqW-yI-M78" id="ZrA-p7-vx9"/>
+                        <outlet property="putRequestAnswerLabel" destination="Zir-g8-jpm" id="Gna-R3-Gzx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

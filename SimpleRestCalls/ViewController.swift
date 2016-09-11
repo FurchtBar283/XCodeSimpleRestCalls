@@ -9,11 +9,19 @@
 import UIKit
 
 class ViewController: UIViewController {
+    // UILabels for showing off request-results
     @IBOutlet weak var getRequestAnswerLabel: UILabel!
+    @IBOutlet weak var postRequestAnswerLabel: UILabel!
+    @IBOutlet weak var optionsRequestAnswerLabel: UILabel!
+    @IBOutlet weak var putRequestAnswerLabel: UILabel!
+    @IBOutlet weak var deleteRequestAnswerLabel: UILabel!
+    @IBOutlet weak var headRequestAnswerLabel: UILabel!
+    // UIButtons for performing every available HTTP-Request
     @IBOutlet weak var getRequestButton: UIButton!
     @IBOutlet weak var postRequestButton: UIButton!
     
-    var jsonResultOrigin :String = ""
+    var getJsonResultKeyOrigin :String = ""
+    var optionsResponseAllowedHTTPMethods = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,17 +33,39 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    
+    // Action-functions for all UIButtons
     @IBAction func getRequestSent(sender: UIButton) {
         sendHTTPGet()
-        if !jsonResultOrigin.isEmpty {
-            self.getRequestAnswerLabel.text = jsonResultOrigin
+        if !getJsonResultKeyOrigin.isEmpty {
+            self.getRequestAnswerLabel.text = getJsonResultKeyOrigin
         }
     }
     
     @IBAction func postRequestSent(sender: UIButton) {
         sendHTTPPost()
-        self.getRequestAnswerLabel.text = "POST sent"
+        self.postRequestAnswerLabel.text = "POST sent"
         
+    }
+    
+    @IBAction func optionsRequestSent(sender: UIButton) {
+        sendHTTPOptions()
+        self.optionsRequestAnswerLabel.text =  "Allowed HTTP methods are " + optionsResponseAllowedHTTPMethods
+    }
+    
+    @IBAction func putRequestSent(sender: UIButton) {
+        sendHTTPPut()
+        self.putRequestAnswerLabel.text = "PUT sent"
+    }
+    
+    @IBAction func deleteRequestSent(sender: UIButton) {
+        sendHTTPDelete()
+        self.deleteRequestAnswerLabel.text = "DELETE sent"
+    }
+    
+    @IBAction func headRequestSent(sender: AnyObject) {
+        sendHTTPHead()
+        self.headRequestAnswerLabel.text = "HEAD sent"
     }
     
     
@@ -66,23 +96,23 @@ class ViewController: UIViewController {
             }
             
             do {
-                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as! NSDictionary
+                let jsonResult = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as! NSDictionary
                 print("GET: Printing json")
-                print(json)
+                print(jsonResult)
                 print("GET: Printing value")
-                print(json.valueForKey("origin"))
+                print(jsonResult.valueForKey("origin"))
                 
                 // TODO: Wait for HTTP-Answer
-                self.jsonResultOrigin = json.valueForKey("origin") as! String
+                self.getJsonResultKeyOrigin = jsonResult.valueForKey("origin") as! String
                 
                 
             } catch let jsonError {
                 print(jsonError)
             }
             
-            let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            let data = NSString(data: data!, encoding: NSUTF8StringEncoding)
             print("GET: Printing NSString")
-            print(str)
+            print(data)
             
         }.resume()
     }
@@ -122,13 +152,105 @@ class ViewController: UIViewController {
                 print(jsonError)
             }
             
-            let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            let data = NSString(data: data!, encoding: NSUTF8StringEncoding)
             print("POST: Printing NSString")
-            print(str)
+            print(data)
             
         }.resume()
+    }
+    
+    
+    // HTTP-OPTIONS
+    func sendHTTPOptions() {
+        let myUrlSessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let myUrlSession = NSURLSession.init(configuration: myUrlSessionConfig)
         
+        let url = NSURL(string: "https://httpbin.org/")
+        let myURLRequest = NSMutableURLRequest.init(URL: url!)
+        myURLRequest.HTTPMethod = "OPTIONS"
+        myURLRequest.timeoutInterval = 60
+        myURLRequest.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        myURLRequest.HTTPShouldHandleCookies = false
+        
+        myUrlSession.dataTaskWithRequest(myURLRequest) { (data, response, error) in
+            
+            if error != nil {
+                print(error)
+                return
+            }
+            
+            let urlResponse = response as! NSHTTPURLResponse
+            print("OPTIONS: Printing response")
+            print(urlResponse)
+            
+            print("OPTIONS: HTTP Statuscode is ")
+            print(urlResponse.statusCode)
+            
+            let urlResponseAsDictionary :NSDictionary = urlResponse.allHeaderFields
+            print("OPTIONS: urlResponseAsDictionary")
+            print(urlResponseAsDictionary)
+            
+            print("OPTIONS: Allowed HTTP methods are")
+            print(urlResponseAsDictionary.valueForKey("allow"))
+            
+            self.optionsResponseAllowedHTTPMethods = urlResponseAsDictionary.valueForKey("allow") as! String
+            
+            
+            }.resume()
+    }
+    
+    // HTTP-PUT
+    func sendHTTPPut() {
+//        let myUrlSessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
+//        let myUrlSession = NSURLSession.init(configuration: myUrlSessionConfig)
+//        
+//        let url = NSURL(string: "https://httpbin.org/put")
         
     }
-
-}
+    
+    // HTTP-DELETE
+    func sendHTTPDelete() {
+//        let myUrlSessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
+//        let myUrlSession = NSURLSession.init(configuration: myUrlSessionConfig)
+//        
+//        let url = NSURL(string: "https://httpbin.org/delete")
+        
+    }
+    
+    // HTTP-HEAD
+    func sendHTTPHead() {
+        let myUrlSessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let myUrlSession = NSURLSession.init(configuration: myUrlSessionConfig)
+        
+        let url = NSURL(string: "https://httpbin.org/get")
+        let myURLRequest = NSMutableURLRequest.init(URL: url!)
+        myURLRequest.HTTPMethod = "HEAD"
+        myURLRequest.timeoutInterval = 60
+        myURLRequest.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        myURLRequest.HTTPShouldHandleCookies = false
+        
+        myUrlSession.dataTaskWithRequest(myURLRequest) { (data, response, error) in
+            
+            if error != nil {
+                print(error)
+                return
+            }
+            
+            let urlResponse = response as! NSHTTPURLResponse
+            print("HEAD: Printing response")
+            print(urlResponse)
+            
+            print("HEAD: HTTP Statuscode is ")
+            print(urlResponse.statusCode)
+            
+            let urlResponseAsDictionary :NSDictionary = urlResponse.allHeaderFields
+            print("HEAD: urlResponseAsDictionary")
+            print(urlResponseAsDictionary)
+            
+            //let urlResponseAsDictionary = urlResponse as NSDictionary
+            
+            }.resume()
+        
+    }
+    
+} // End of class ViewController
