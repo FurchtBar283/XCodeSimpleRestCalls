@@ -9,11 +9,11 @@
 import UIKit
 
 class ViewController: UIViewController {
-    @IBOutlet weak var getRequestButton: UIButton!
     @IBOutlet weak var getRequestAnswerLabel: UILabel!
+    @IBOutlet weak var getRequestButton: UIButton!
+    @IBOutlet weak var postRequestButton: UIButton!
     
     var jsonResultOrigin :String = ""
-    @IBOutlet weak var postRequestButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,12 +47,10 @@ class ViewController: UIViewController {
         let myUrlSessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
         
         
-        
         //var myUrlSession = NSURLSession.init(configuration: myUrlSessionConfig, delegate: nil, delegateQueue: NSOperationQueue?)
         let myUrlSession = NSURLSession.init(configuration: myUrlSessionConfig)
         //var mySessionTask = NSURLSessionTask.init()
         //var mySessionDataTask = NSURLSessionDataTask.init()
-        
         
         
         let url = NSURL(string: "https://httpbin.org/get")
