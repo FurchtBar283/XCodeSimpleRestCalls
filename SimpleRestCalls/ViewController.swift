@@ -200,20 +200,83 @@ class ViewController: UIViewController {
     }
     
     // HTTP-PUT
+    // TODO: Perform File-Replacement
     func sendHTTPPut() {
-//        let myUrlSessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
-//        let myUrlSession = NSURLSession.init(configuration: myUrlSessionConfig)
-//        
-//        let url = NSURL(string: "https://httpbin.org/put")
+        let myUrlSessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let myUrlSession = NSURLSession.init(configuration: myUrlSessionConfig)
+        
+        let url = NSURL(string: "https://httpbin.org/put")
+        
+        let myURLRequest = NSMutableURLRequest.init(URL: url!)
+        myURLRequest.HTTPMethod = "PUT"
+        let valueToPost = "project=REST-Calls&developer=PierceBrosnan"
+        let data = valueToPost.dataUsingEncoding(NSUTF8StringEncoding)
+        myURLRequest.HTTPBody = data
+        myURLRequest.timeoutInterval = 60
+        myURLRequest.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        myURLRequest.HTTPShouldHandleCookies = false
+        
+        myUrlSession.dataTaskWithRequest(myURLRequest) { (data, response, error) in
+            
+            if error != nil {
+                print(error)
+                return
+            }
+            
+            do {
+                let jsonResult = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
+                print("PUT: Printing json")
+                print(jsonResult)
+                
+            } catch let jsonError {
+                print(jsonError)
+            }
+            
+            let data = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            print("PUT: Printing NSString")
+            print(data)
+            
+            }.resume()
         
     }
     
     // HTTP-DELETE
     func sendHTTPDelete() {
-//        let myUrlSessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
-//        let myUrlSession = NSURLSession.init(configuration: myUrlSessionConfig)
-//        
-//        let url = NSURL(string: "https://httpbin.org/delete")
+        let myUrlSessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let myUrlSession = NSURLSession.init(configuration: myUrlSessionConfig)
+        
+        let url = NSURL(string: "https://httpbin.org/delete")
+        
+        let myURLRequest = NSMutableURLRequest.init(URL: url!)
+        myURLRequest.HTTPMethod = "DELETE"
+        myURLRequest.timeoutInterval = 60
+        myURLRequest.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
+        myURLRequest.HTTPShouldHandleCookies = false
+        
+        myUrlSession.dataTaskWithRequest(myURLRequest) { (data, response, error) in
+            
+            if error != nil {
+                print(error)
+                return
+            }
+            
+            do {
+                let jsonResult = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
+                print("DELETE: Printing json")
+                print(jsonResult)
+                
+            } catch let jsonError {
+                print(jsonError)
+            }
+            
+            let urlResponse = response as! NSHTTPURLResponse
+            print("DELETE: Printing response")
+            print(urlResponse)
+            
+            print("DELETE: HTTP Statuscode is ")
+            print(urlResponse.statusCode)
+            
+            }.resume()
         
     }
     
