@@ -1,11 +1,3 @@
-//
-//  ViewController.swift
-//  SimpleRestCalls
-//
-//  Created by Michael Stroh on 16.08.16.
-//  Copyright © 2016 Michael Stroh. All rights reserved.
-//
-
 import UIKit
 
 class ViewController: UIViewController {
