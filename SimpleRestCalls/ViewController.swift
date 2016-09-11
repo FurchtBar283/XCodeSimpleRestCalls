@@ -178,8 +178,7 @@ class ViewController: UIViewController {
             print("OPTIONS: Printing response")
             print(urlResponse)
             
-            print("OPTIONS: HTTP Statuscode is ")
-            print(urlResponse.statusCode)
+            print("HEAD: HTTP Statuscode is \(urlResponse.statusCode)")
             
             let urlResponseAsDictionary :NSDictionary = urlResponse.allHeaderFields
             print("OPTIONS: urlResponseAsDictionary")
@@ -255,25 +254,17 @@ class ViewController: UIViewController {
                 return
             }
             
-            do {
-                let jsonResult = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
-                print("DELETE: Printing json")
-                print(jsonResult)
-                
-            } catch let jsonError {
-                print(jsonError)
-            }
-            
             let urlResponse = response as! NSHTTPURLResponse
             print("DELETE: Printing response")
             print(urlResponse)
             
-            print("DELETE: HTTP Statuscode is ")
-            print(urlResponse.statusCode)
+            print("HEAD: HTTP Statuscode is \(urlResponse.statusCode)")
             
             if urlResponse.statusCode == 200 {
                 print("DELETE: Ressource successfully deleted")
                 self.httpResult = "Ressource successfully deleted"
+            } else {
+                print("DELETE: Bad-Request")
             }
             
             }.resume()
@@ -303,14 +294,13 @@ class ViewController: UIViewController {
             print("HEAD: Printing response")
             print(urlResponse)
             
-            print("HEAD: HTTP Statuscode is ")
-            print(urlResponse.statusCode)
+            print("HEAD: HTTP Statuscode is \(urlResponse.statusCode)")
             
             let urlResponseAsDictionary :NSDictionary = urlResponse.allHeaderFields
             print("HEAD: urlResponseAsDictionary")
             print(urlResponseAsDictionary)
             
-            //let urlResponseAsDictionary = urlResponse as NSDictionary
+            //Extract HTTP-Header-Options from Dictionary if necessary
             
             }.resume()
         
