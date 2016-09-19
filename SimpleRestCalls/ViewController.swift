@@ -119,7 +119,8 @@ class ViewController: UIViewController {
         
         let url = URL(string: "https://httpbin.org/post")
         
-        let myURLRequest = NSMutableURLRequest.init(url: url!)
+        //let myURLRequest = NSMutableURLRequest.init(url: url!)
+        var myURLRequest = URLRequest.init(url: url!)
         myURLRequest.httpMethod = "POST"
         //let valueToPost = "project=REST-Call"
         let valueToPost = "project=REST-Call&developer=PierceBrosnan"
@@ -132,7 +133,7 @@ class ViewController: UIViewController {
         myURLRequest.httpShouldHandleCookies = false
         
         
-        myUrlSession.dataTask(with: myURLRequest as URLRequest, completionHandler: { (data, response, error) in
+        myUrlSession.dataTask(with: myURLRequest, completionHandler: { (data, response, error) in
             
             if error != nil {
                 print(error)
@@ -162,13 +163,14 @@ class ViewController: UIViewController {
         let myUrlSession = URLSession.init(configuration: myUrlSessionConfig)
         
         let url = URL(string: "https://httpbin.org/")
-        let myURLRequest = NSMutableURLRequest.init(url: url!)
+        //let myURLRequest = NSMutableURLRequest.init(url: url!)
+        var myURLRequest = URLRequest.init(url: url!)
         myURLRequest.httpMethod = "OPTIONS"
         myURLRequest.timeoutInterval = 60
         myURLRequest.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
         myURLRequest.httpShouldHandleCookies = false
         
-        myUrlSession.dataTask(with: myURLRequest as URLRequest, completionHandler: { (data, response, error) in
+        myUrlSession.dataTask(with: myURLRequest, completionHandler: { (data, response, error) in
             
             if error != nil {
                 print(error)
@@ -202,7 +204,8 @@ class ViewController: UIViewController {
         
         let url = URL(string: "https://httpbin.org/put")
         
-        let myURLRequest = NSMutableURLRequest.init(url: url!)
+        //let myURLRequest = NSMutableURLRequest.init(url: url!)
+        var myURLRequest = URLRequest.init(url: url!)
         myURLRequest.httpMethod = "PUT"
         let valueToPost = "project=REST-Calls&developer=PierceBrosnan"
         let data = valueToPost.data(using: String.Encoding.utf8)
@@ -211,7 +214,7 @@ class ViewController: UIViewController {
         myURLRequest.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
         myURLRequest.httpShouldHandleCookies = false
         
-        myUrlSession.dataTask(with: myURLRequest as URLRequest, completionHandler: { (data, response, error) in
+        myUrlSession.dataTask(with: myURLRequest, completionHandler: { (data, response, error) in
             
             if error != nil {
                 print(error)
@@ -242,13 +245,14 @@ class ViewController: UIViewController {
         
         let url = URL(string: "https://httpbin.org/delete")
         
-        let myURLRequest = NSMutableURLRequest.init(url: url!)
+        //let myURLRequest = NSMutableURLRequest.init(url: url!)
+        var myURLRequest = URLRequest.init(url: url!)
         myURLRequest.httpMethod = "DELETE"
         myURLRequest.timeoutInterval = 60
         myURLRequest.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
         myURLRequest.httpShouldHandleCookies = false
         
-        myUrlSession.dataTask(with: myURLRequest as URLRequest, completionHandler: { (data, response, error) in
+        myUrlSession.dataTask(with: myURLRequest, completionHandler: { (data, response, error) in
             
             if error != nil {
                 print(error)
@@ -278,13 +282,14 @@ class ViewController: UIViewController {
         let myUrlSession = URLSession.init(configuration: myUrlSessionConfig)
         
         let url = URL(string: "https://httpbin.org/get")
-        let myURLRequest = NSMutableURLRequest.init(url: url!)
+        //let myURLRequest = NSMutableURLRequest.init(url: url!)
+        var myURLRequest = URLRequest.init(url: url!)
         myURLRequest.httpMethod = "HEAD"
         myURLRequest.timeoutInterval = 60
         myURLRequest.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
         myURLRequest.httpShouldHandleCookies = false
         
-        myUrlSession.dataTask(with: myURLRequest as URLRequest, completionHandler: { (data, response, error) in
+        myUrlSession.dataTask(with: myURLRequest, completionHandler: { (data, response, error) in
             
             if error != nil {
                 print(error)
