@@ -26,7 +26,7 @@ class ViewController: UIViewController {
 
     
     // Action-functions for all UIButtons
-    @IBAction func getRequestSent(sender: UIButton) {
+    @IBAction func getRequestSent(_ sender: UIButton) {
         sendHTTPGet()
         if !httpResult.isEmpty {
             self.getRequestAnswerLabel.text = httpResult
@@ -34,29 +34,29 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func postRequestSent(sender: UIButton) {
+    @IBAction func postRequestSent(_ sender: UIButton) {
         sendHTTPPost()
         self.postRequestAnswerLabel.text = "POST sent"
     }
     
-    @IBAction func optionsRequestSent(sender: UIButton) {
+    @IBAction func optionsRequestSent(_ sender: UIButton) {
         sendHTTPOptions()
         self.optionsRequestAnswerLabel.text =  "Allowed HTTP methods are " + httpResult
         httpResult = ""
     }
     
-    @IBAction func putRequestSent(sender: UIButton) {
+    @IBAction func putRequestSent(_ sender: UIButton) {
         sendHTTPPut()
         self.putRequestAnswerLabel.text = "PUT sent"
     }
     
-    @IBAction func deleteRequestSent(sender: UIButton) {
+    @IBAction func deleteRequestSent(_ sender: UIButton) {
         sendHTTPDelete()
         self.deleteRequestAnswerLabel.text = httpResult
         httpResult = ""
     }
     
-    @IBAction func headRequestSent(sender: AnyObject) {
+    @IBAction func headRequestSent(_ sender: AnyObject) {
         sendHTTPHead()
         self.headRequestAnswerLabel.text = "HEAD sent"
     }
@@ -68,21 +68,21 @@ class ViewController: UIViewController {
         // Creating a configuration object is always the first step when uploading or downloading data
         // configure timeout values, caching policies, connection requirements and other types of info for NSURLSession
         // Once configured session object ignores any changes you m ake to the NSURLSessionConfiguration
-        let myUrlSessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let myUrlSessionConfig = URLSessionConfiguration.default
         
         
         //var myUrlSession = NSURLSession.init(configuration: myUrlSessionConfig, delegate: nil, delegateQueue: NSOperationQueue?)
-        let myUrlSession = NSURLSession.init(configuration: myUrlSessionConfig)
+        let myUrlSession = URLSession.init(configuration: myUrlSessionConfig)
         //var mySessionTask = NSURLSessionTask.init()
         //var mySessionDataTask = NSURLSessionDataTask.init()
         
         
-        let url = NSURL(string: "https://httpbin.org/get")
-        let request = NSURLRequest.init(URL: url!)
+        let url = URL(string: "https://httpbin.org/get")
+        let request = URLRequest.init(url: url!)
         
         //NSURLSession.sharedSession().dataTaskWithRequest(<#T##request: NSURLRequest##NSURLRequest#>)
         //NSURLSession.sharedSession().dataTaskWithURL(url!)
-        myUrlSession.dataTaskWithRequest(request) { (data, response, error) in
+        myUrlSession.dataTask(with: request, completionHandler: { (data, response, error) in
             
             if error != nil {
                 print(error)
@@ -90,48 +90,49 @@ class ViewController: UIViewController {
             }
             
             do {
-                let jsonResult = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as! NSDictionary
+                let jsonResult = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
                 print("GET: Printing json")
                 print(jsonResult)
                 print("GET: Printing value")
-                print(jsonResult.valueForKey("origin"))
+                print(jsonResult.value(forKey: "origin"))
                 
                 // TODO: Wait for HTTP-Answer
-                self.httpResult = jsonResult.valueForKey("origin") as! String
+                self.httpResult = jsonResult.value(forKey: "origin") as! String
                 
                 
             } catch let jsonError {
                 print(jsonError)
             }
             
-            let data = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            let data = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
             print("GET: Printing NSString")
             print(data)
             
-        }.resume()
+        }) .resume()
     }
     
     // HTTP-POST
     // TODO: Post JSON, Upload a file
     func sendHTTPPost() {
-        let myUrlSessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
-        let myUrlSession = NSURLSession.init(configuration: myUrlSessionConfig)
+        let myUrlSessionConfig = URLSessionConfiguration.default
+        let myUrlSession = URLSession.init(configuration: myUrlSessionConfig)
         
-        let url = NSURL(string: "https://httpbin.org/post")
+        let url = URL(string: "https://httpbin.org/post")
         
-        let myURLRequest = NSMutableURLRequest.init(URL: url!)
-        myURLRequest.HTTPMethod = "POST"
+        let myURLRequest = NSMutableURLRequest.init(url: url!)
+        myURLRequest.httpMethod = "POST"
         //let valueToPost = "project=REST-Call"
         let valueToPost = "project=REST-Call&developer=PierceBrosnan"
         // TODO: Post JSON
         // TODO: Upload a file
-        let data = valueToPost.dataUsingEncoding(NSUTF8StringEncoding)
-        myURLRequest.HTTPBody = data
+        let data = valueToPost.data(using: String.Encoding.utf8)
+        myURLRequest.httpBody = data
         myURLRequest.timeoutInterval = 60
-        myURLRequest.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
-        myURLRequest.HTTPShouldHandleCookies = false
+        myURLRequest.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
+        myURLRequest.httpShouldHandleCookies = false
         
-        myUrlSession.dataTaskWithRequest(myURLRequest) { (data, response, error) in
+        
+        myUrlSession.dataTask(with: myURLRequest as URLRequest, completionHandler: { (data, response, error) in
             
             if error != nil {
                 print(error)
@@ -139,7 +140,7 @@ class ViewController: UIViewController {
             }
             
             do {
-                let jsonResult = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
+                let jsonResult = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
                 print("POST: Printing json")
                 print(jsonResult)
                 
@@ -147,70 +148,70 @@ class ViewController: UIViewController {
                 print(jsonError)
             }
             
-            let data = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            let data = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
             print("POST: Printing NSString")
             print(data)
             
-        }.resume()
+        }) .resume()
     }
     
     
     // HTTP-OPTIONS
     func sendHTTPOptions() {
-        let myUrlSessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
-        let myUrlSession = NSURLSession.init(configuration: myUrlSessionConfig)
+        let myUrlSessionConfig = URLSessionConfiguration.default
+        let myUrlSession = URLSession.init(configuration: myUrlSessionConfig)
         
-        let url = NSURL(string: "https://httpbin.org/")
-        let myURLRequest = NSMutableURLRequest.init(URL: url!)
-        myURLRequest.HTTPMethod = "OPTIONS"
+        let url = URL(string: "https://httpbin.org/")
+        let myURLRequest = NSMutableURLRequest.init(url: url!)
+        myURLRequest.httpMethod = "OPTIONS"
         myURLRequest.timeoutInterval = 60
-        myURLRequest.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
-        myURLRequest.HTTPShouldHandleCookies = false
+        myURLRequest.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
+        myURLRequest.httpShouldHandleCookies = false
         
-        myUrlSession.dataTaskWithRequest(myURLRequest) { (data, response, error) in
+        myUrlSession.dataTask(with: myURLRequest as URLRequest, completionHandler: { (data, response, error) in
             
             if error != nil {
                 print(error)
                 return
             }
             
-            let urlResponse = response as! NSHTTPURLResponse
+            let urlResponse = response as! HTTPURLResponse
             print("OPTIONS: Printing response")
             print(urlResponse)
             
             print("HEAD: HTTP Statuscode is \(urlResponse.statusCode)")
             
-            let urlResponseAsDictionary :NSDictionary = urlResponse.allHeaderFields
+            let urlResponseAsDictionary :NSDictionary = urlResponse.allHeaderFields as NSDictionary
             print("OPTIONS: urlResponseAsDictionary")
             print(urlResponseAsDictionary)
             
             print("OPTIONS: Allowed HTTP methods are")
-            print(urlResponseAsDictionary.valueForKey("allow"))
+            print(urlResponseAsDictionary.value(forKey: "allow"))
             
-            self.httpResult = urlResponseAsDictionary.valueForKey("allow") as! String
+            self.httpResult = urlResponseAsDictionary.value(forKey: "allow") as! String
             
             
-            }.resume()
+            }) .resume()
     }
     
     // HTTP-PUT
     // TODO: Perform File-Replacement
     func sendHTTPPut() {
-        let myUrlSessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
-        let myUrlSession = NSURLSession.init(configuration: myUrlSessionConfig)
+        let myUrlSessionConfig = URLSessionConfiguration.default
+        let myUrlSession = URLSession.init(configuration: myUrlSessionConfig)
         
-        let url = NSURL(string: "https://httpbin.org/put")
+        let url = URL(string: "https://httpbin.org/put")
         
-        let myURLRequest = NSMutableURLRequest.init(URL: url!)
-        myURLRequest.HTTPMethod = "PUT"
+        let myURLRequest = NSMutableURLRequest.init(url: url!)
+        myURLRequest.httpMethod = "PUT"
         let valueToPost = "project=REST-Calls&developer=PierceBrosnan"
-        let data = valueToPost.dataUsingEncoding(NSUTF8StringEncoding)
-        myURLRequest.HTTPBody = data
+        let data = valueToPost.data(using: String.Encoding.utf8)
+        myURLRequest.httpBody = data
         myURLRequest.timeoutInterval = 60
-        myURLRequest.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
-        myURLRequest.HTTPShouldHandleCookies = false
+        myURLRequest.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
+        myURLRequest.httpShouldHandleCookies = false
         
-        myUrlSession.dataTaskWithRequest(myURLRequest) { (data, response, error) in
+        myUrlSession.dataTask(with: myURLRequest as URLRequest, completionHandler: { (data, response, error) in
             
             if error != nil {
                 print(error)
@@ -218,7 +219,7 @@ class ViewController: UIViewController {
             }
             
             do {
-                let jsonResult = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
+                let jsonResult = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
                 print("PUT: Printing json")
                 print(jsonResult)
                 
@@ -226,35 +227,35 @@ class ViewController: UIViewController {
                 print(jsonError)
             }
             
-            let data = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            let data = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
             print("PUT: Printing NSString")
             print(data)
             
-            }.resume()
+            }) .resume()
         
     }
     
     // HTTP-DELETE
     func sendHTTPDelete() {
-        let myUrlSessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
-        let myUrlSession = NSURLSession.init(configuration: myUrlSessionConfig)
+        let myUrlSessionConfig = URLSessionConfiguration.default
+        let myUrlSession = URLSession.init(configuration: myUrlSessionConfig)
         
-        let url = NSURL(string: "https://httpbin.org/delete")
+        let url = URL(string: "https://httpbin.org/delete")
         
-        let myURLRequest = NSMutableURLRequest.init(URL: url!)
-        myURLRequest.HTTPMethod = "DELETE"
+        let myURLRequest = NSMutableURLRequest.init(url: url!)
+        myURLRequest.httpMethod = "DELETE"
         myURLRequest.timeoutInterval = 60
-        myURLRequest.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
-        myURLRequest.HTTPShouldHandleCookies = false
+        myURLRequest.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
+        myURLRequest.httpShouldHandleCookies = false
         
-        myUrlSession.dataTaskWithRequest(myURLRequest) { (data, response, error) in
+        myUrlSession.dataTask(with: myURLRequest as URLRequest, completionHandler: { (data, response, error) in
             
             if error != nil {
                 print(error)
                 return
             }
             
-            let urlResponse = response as! NSHTTPURLResponse
+            let urlResponse = response as! HTTPURLResponse
             print("DELETE: Printing response")
             print(urlResponse)
             
@@ -267,42 +268,42 @@ class ViewController: UIViewController {
                 print("DELETE: Bad-Request")
             }
             
-            }.resume()
+            }) .resume()
         
     }
     
     // HTTP-HEAD
     func sendHTTPHead() {
-        let myUrlSessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
-        let myUrlSession = NSURLSession.init(configuration: myUrlSessionConfig)
+        let myUrlSessionConfig = URLSessionConfiguration.default
+        let myUrlSession = URLSession.init(configuration: myUrlSessionConfig)
         
-        let url = NSURL(string: "https://httpbin.org/get")
-        let myURLRequest = NSMutableURLRequest.init(URL: url!)
-        myURLRequest.HTTPMethod = "HEAD"
+        let url = URL(string: "https://httpbin.org/get")
+        let myURLRequest = NSMutableURLRequest.init(url: url!)
+        myURLRequest.httpMethod = "HEAD"
         myURLRequest.timeoutInterval = 60
-        myURLRequest.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringCacheData
-        myURLRequest.HTTPShouldHandleCookies = false
+        myURLRequest.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
+        myURLRequest.httpShouldHandleCookies = false
         
-        myUrlSession.dataTaskWithRequest(myURLRequest) { (data, response, error) in
+        myUrlSession.dataTask(with: myURLRequest as URLRequest, completionHandler: { (data, response, error) in
             
             if error != nil {
                 print(error)
                 return
             }
             
-            let urlResponse = response as! NSHTTPURLResponse
+            let urlResponse = response as! HTTPURLResponse
             print("HEAD: Printing response")
             print(urlResponse)
             
             print("HEAD: HTTP Statuscode is \(urlResponse.statusCode)")
             
-            let urlResponseAsDictionary :NSDictionary = urlResponse.allHeaderFields
+            let urlResponseAsDictionary :NSDictionary = urlResponse.allHeaderFields as NSDictionary
             print("HEAD: urlResponseAsDictionary")
             print(urlResponseAsDictionary)
             
             //Extract HTTP-Header-Options from Dictionary if necessary
             
-            }.resume()
+            }) .resume()
         
     }
     
